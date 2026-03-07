@@ -27,7 +27,10 @@
     "@angular/build": "^20.1.4",
     "@angular/cli": "^20.1.4",
     "@angular/compiler-cli": "^20.1.4",
+    "@tailwindcss/postcss": "^4.2.1",
     "@tauri-apps/cli": "^2",
+    "@types/jasmine": "^6.0.0",
+    "postcss": "^8.5.8",
     "typescript": "~5.8.3"
   }
 }
