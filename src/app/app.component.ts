@@ -2,10 +2,11 @@ import { Component } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
 import { invoke } from "@tauri-apps/api/core";
 import { Header } from "./header/header";
+import { UserKeybinds } from "./user-keybinds/user-keybinds";
 
 @Component({
   selector: "app-root",
-  imports: [RouterOutlet, Header],
+  imports: [RouterOutlet, Header, UserKeybinds],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",
 })

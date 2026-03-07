@@ -1,0 +1,22 @@
+
+<div class="text-primary">
+    <h2 class="text-xl pt-8 p-6">My Keybinds</h2>
+
+    <div class="p-4 bg-zinc-700 min-h-80 shadow-lg mx-4 rounded-sm">
+        @if (keybinds.length === 0){
+            <p class="font-jakarta text-muted">You have no custom keybinds yet. Add one below to get started.</p>
+        }
+        @else {
+            <ul class="font-jetbrainsmono">
+                @for (keybind of keybinds; track keybind.name + keybind.keyCombo; let i = $index) {
+                    <li class="flex items-center gap-4 py-2">
+                        <span class="font-jakarta">{{keybind.name}} </span> 
+                        —
+                        <span class="font-jetbrainsmono"> {{ keybind.keyCombo }}</span>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>
+
