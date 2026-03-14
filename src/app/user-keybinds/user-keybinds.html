@@ -1,8 +1,18 @@
 
-<div class="text-primary">
-    <h2 class="text-xl pt-8 p-6">My Keybinds</h2>
-
-    <div class="p-4 bg-zinc-700 min-h-80 shadow-lg mx-4 rounded-sm">
+<div class="text-primary bg-surface border-background">
+    <div class="flex justify-between items-center pt-8 px-6 pb-0">
+        <h2 class="text-xl">My Keybinds</h2>
+        <input
+            type="text"
+            placeholder="Search"  
+            (input)="onSearch($event)"
+            (focus)="searchExpanded = true"
+            (blur)="searchExpanded = false"
+            [class]="searchExpanded ? 'w-48' : 'w-20'"
+            class="bg-zinc-700 text-sm text-primary placeholder-zinc-400 rounded px-3 py-1.5 outline-none focus:ring-1 focus:ring-zinc-500 transition-all duration-300"
+            />
+    </div>
+    <div class="p-4 bg-zinc-700 min-h-80 shadow-2xl mx-4 mt-4 rounded-sm">
         @if (keybinds.length === 0){
             <p class="font-jakarta text-muted">You have no custom keybinds yet. Add one below to get started.</p>
         }

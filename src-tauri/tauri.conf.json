@@ -12,9 +12,12 @@
   "app": {
     "windows": [
       {
-        "title": "keychange",
-        "width": 800,
-        "height": 600
+        "width": 400,
+        "height": 400,
+        "visible": false,
+        "maximizable": false,
+        "resizable": false,
+        "decorations": false
       }
     ],
     "security": {
