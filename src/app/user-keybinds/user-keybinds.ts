@@ -26,6 +26,10 @@ export class UserKeybinds {
         k.keyCombo.toLowerCase().includes(query)
     );
   }
+
+  openPopup(){
+
+  }
 }
 
 

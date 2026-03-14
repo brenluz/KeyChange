@@ -1,5 +1,8 @@
-<app-title-bar/>
+<div class="h-screen flex flex-col">
+    <app-title-bar/>
+    <app-user-keybinds class="flex-1" />
 
-<app-user-keybinds />
+    <router-outlet />
+    
+</div>
 
-<router-outlet />
