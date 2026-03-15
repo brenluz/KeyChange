@@ -1,1 +1,46 @@
-<p>add-keybind-modal works!</p>
+@if (isOpen) {
+    <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+        (click)="close()">
+        <div class="bg-zinc-800 rounded p-6 w-80 flex flex-col gap-4"
+            (click)="$event.stopPropagation()">
+
+            <h3 class="text-lg font-medium text-primary">Add Keybind</h3>
+
+            <div class="flex flex-col gap-1">
+                <label class="text-sm text-zinc-400">Name</label>
+                <input
+                    type="text"
+                    [(ngModel)]="newName"
+                    class="bg-zinc-700 text-sm px-3 py-2 rounded outline-none focus:ring-1 focus:ring-zinc-500 text-primary"
+                />
+            </div>
+
+            <div class="flex flex-col gap-1">
+                <label class="text-sm text-zinc-400">Key Combo</label>
+                <div
+                    tabindex="0"
+                    (keydown)="recordKey($event)"
+                    (keyup)="stopRecording($event)"
+                    (focus)="recording = true"
+                    (blur)="recording = false; pressedKeys.clear()"
+                    class="bg-zinc-700 text-sm px-3 py-2 rounded outline-none focus:ring-1 focus:ring-zinc-500 cursor-pointer font-jetbrainsmono text-primary"
+                    [class.ring-1]="recording"
+                    [class.ring-zinc-400]="recording">
+                    {{ newKeyCombo || (recording ? 'Press keys...' : 'Click to record') }}
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2">
+                <button (click)="close()"
+                    class="text-sm px-4 py-2 rounded bg-zinc-700 hover:bg-zinc-600 transition-colors text-primary">
+                    Cancel
+                </button>
+                <button (click)="save()"
+                    [disabled]="!newName || !newKeyCombo"
+                    class="text-sm px-4 py-2 rounded bg-blue-700 hover:bg-blue-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors text-primary">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+}

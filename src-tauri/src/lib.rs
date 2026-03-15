@@ -6,6 +6,7 @@ use tauri::tray::TrayIconEvent;
 use tauri::Manager;
 use utils::hex_to_color;
 
+
 #[tauri::command]
 fn set_theme(window: tauri::WebviewWindow, is_dark: bool){
     let color = if is_dark { Some(hex_to_color("#FFFFFF")) } else { Some( Color(255, 255, 255, 255)) };
@@ -41,6 +42,7 @@ pub fn run() {
             Ok(())
         })
         .plugin(tauri_plugin_opener::init())
+        .plugin(tauri_plugin_fs::init())
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

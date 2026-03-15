@@ -9,6 +9,12 @@
     "core:window:default",
     "core:window:allow-start-dragging",
     "core:window:allow-minimize",
-    "core:window:allow-close"
+    "core:window:allow-close",
+    "fs:allow-app-read",
+    "fs:allow-app-write",
+    "fs:allow-app-meta",
+    "global-shortcut:allow-register",
+    "global-shortcut:allow-unregister",
+    "global-shortcut:allow-is-registered"
   ]
 }

@@ -36,3 +36,8 @@
     </div>
 </div>
 
+<app-add-keybind-modal
+    [isOpen]="modalOpen"
+    (closed)="modalOpen = false"
+    (keybindAdded)="onKeybindAdded($event)"
+/>
