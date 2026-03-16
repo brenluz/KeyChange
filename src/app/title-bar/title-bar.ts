@@ -13,7 +13,7 @@ export class TitleBar {
       this.appWindow.minimize()
     }
 
-    close(){
+    async close(){
       this.appWindow.hide()
     }
 }
