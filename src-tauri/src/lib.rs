@@ -6,12 +6,10 @@ use tauri::tray::TrayIconEvent;
 use tauri::Manager;
 use utils::hex_to_color;
 
-
 #[tauri::command]
 fn set_theme(window: tauri::WebviewWindow, is_dark: bool){
     let color = if is_dark { Some(hex_to_color("#FFFFFF")) } else { Some( Color(255, 255, 255, 255)) };
     window.set_background_color(color).ok();
-
 }
 
 pub fn run() {

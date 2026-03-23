@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
 export interface Keybind{
   name: string;
   keyCombo: string;
@@ -12,13 +13,22 @@ export interface Keybind{
 })
 export class AddKeybindModal {
   @Input() isOpen = false
+  @Input() keybindToEdit: Keybind | null = null
   @Output() closed = new EventEmitter<void>()
   @Output() keybindAdded = new EventEmitter<Keybind>();
+  @Output() keybindEdited = new EventEmitter<Keybind>();
 
   newName = ""
   newKeyCombo = ""
   recording = false;
   pressedKeys = new Set<string>();
+
+  ngOnChanges(){
+    if (this.keybindToEdit) {
+      this.newName = this.keybindToEdit.name;
+      this.newKeyCombo = this.keybindToEdit.keyCombo;
+    }
+  }
 
   recordKey(event: KeyboardEvent){
     event.preventDefault();
@@ -48,8 +58,13 @@ export class AddKeybindModal {
 
   save() {
     if (!this.newName || !this.newKeyCombo) return;
-    this.keybindAdded.emit({ name: this.newName, keyCombo: this.newKeyCombo });
-    this.reset();
+    const keybind = { name: this.newName, keyCombo: this.newKeyCombo };
+    if (this.keybindToEdit) {
+      this.keybindEdited.emit(keybind);
+  } else {
+      this.keybindAdded.emit(keybind);
+  }
+  this.reset();
   }
 
   close() {

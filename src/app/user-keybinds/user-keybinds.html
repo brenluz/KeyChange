@@ -1,5 +1,4 @@
-
-<div class="text-primary bg-surface border-background flex flex-col h-full">
+<div class="text-primary bg-surface border-background flex flex-col h-full over">
     <div class="flex justify-between items-center pt-8 px-6 pb-0">
         <h2 class="text-xl">My Keybinds</h2>
         <input
@@ -23,6 +22,16 @@
                         <span class="font-jakarta">{{keybind.name}} </span> 
                         —
                         <span class="font-jetbrainsmono"> {{ keybind.keyCombo }}</span>
+                        <div class="ml-auto flex gap-2">
+                            <button (click)="editKeybind(keybind)" 
+                                class="text-zinc-400 hover:text-white transition-colors leading-none">
+                                <mat-icon class="font-size: 16px; width: 16px; height: 16px;">edit</mat-icon>
+                            </button>
+                            <button (click)="deleteKeybind(keybind)" 
+                                class="text-zinc-400 hover:text-red-500 transition-colors">
+                                <mat-icon class="font-size: 16px; width: 16px; height: 16px;">delete</mat-icon>
+                            </button>
+                        </div>
                     </li>
                 }
             </ul>
@@ -38,6 +47,8 @@
 
 <app-add-keybind-modal
     [isOpen]="modalOpen"
+    [keybindToEdit]="keybindToEdit"
     (closed)="modalOpen = false"
     (keybindAdded)="onKeybindAdded($event)"
+    (keybindEdited)="onKeybindEdited($event)"
 />

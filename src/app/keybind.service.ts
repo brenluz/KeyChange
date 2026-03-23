@@ -9,7 +9,6 @@ const FILE_PATH = "keybinds.json";
 })
 
 export class KeybindService { 
-
   async load(): Promise<Keybind[]> {
     try {
 		const fileExists = await exists(FILE_PATH, { baseDir: BaseDirectory.AppData});
