@@ -1,9 +1,15 @@
 import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-export interface Keybind{
+export interface Keybind {
   name: string;
   keyCombo: string;
+  action: string;
+}
+
+interface Preset {
+  label: string;
+  path: string;
 }
 
 @Component({
@@ -11,60 +17,80 @@ export interface Keybind{
   imports: [FormsModule],
   templateUrl: './add-keybind-modal.html',
 })
-export class AddKeybindModal {
-  @Input() isOpen = false
-  @Input() keybindToEdit: Keybind | null = null
-  @Output() closed = new EventEmitter<void>()
+export class AddKeybindModal implements OnChanges {
+  @Input() isOpen = false;
+  @Input() keybindToEdit: Keybind | null = null;
+  @Output() closed = new EventEmitter<void>();
   @Output() keybindAdded = new EventEmitter<Keybind>();
   @Output() keybindEdited = new EventEmitter<Keybind>();
 
-  newName = ""
-  newKeyCombo = ""
+  newName = '';
+  newKeyCombo = '';
+  newAction = '';
+  selectedPreset = '';
   recording = false;
   pressedKeys = new Set<string>();
 
-  ngOnChanges(){
+  presets: Preset[] = [
+    { label: 'Spotify', path: 'spotify' },
+    { label: 'YouTube', path: 'https://youtube.com' },
+    { label: 'Windows Settings', path: 'ms-settings:' },
+    { label: 'File Explorer', path: 'explorer' },
+    { label: 'Task Manager', path: 'taskmgr' },
+    { label: 'Calculator', path: 'calc' },
+    { label: 'Notepad', path: 'notepad' },
+    { label: 'VS Code', path: 'code' },
+  ];
+
+  ngOnChanges() {
     if (this.keybindToEdit) {
       this.newName = this.keybindToEdit.name;
       this.newKeyCombo = this.keybindToEdit.keyCombo;
+      this.newAction = this.keybindToEdit.action;
+      this.selectedPreset = this.presets.find(p => p.path === this.keybindToEdit!.action)?.path ?? '';
     }
   }
 
-  recordKey(event: KeyboardEvent){
-    event.preventDefault();
-    this.pressedKeys.add(this.formatKey(event.key))
-    this.newKeyCombo = Array.from(this.pressedKeys).join(" + ")
+  onPresetChange(value: string) {
+    this.newAction = value;
   }
-  
+
+  recordKey(event: KeyboardEvent) {
+    event.preventDefault();
+    this.pressedKeys.add(this.formatKey(event.key));
+    this.newKeyCombo = Array.from(this.pressedKeys).join('+');
+  }
+
   stopRecording(event: KeyboardEvent) {
-    // clear pressed keys on keyup so next combo starts fresh
     if (event.key !== 'Shift' && event.key !== 'Control' && event.key !== 'Alt') {
-        this.pressedKeys.clear();
+      this.pressedKeys.clear();
     }
   }
 
   formatKey(key: string): string {
     const map: Record<string, string> = {
-        Control: 'Ctrl',
-        Meta: 'Win',
-        ' ': 'Space',
-        ArrowUp: '↑',
-        ArrowDown: '↓',
-        ArrowLeft: '←',
-        ArrowRight: '→',
+      Control: 'CTRL',
+      Alt: 'ALT',
+      Shift: 'SHIFT',
+      Meta: 'SUPER',
+      ' ': 'Space',
+      ArrowUp: 'Up',
+      ArrowDown: 'Down',
+      ArrowLeft: 'Left',
+      ArrowRight: 'Right',
     };
-    return map[key] ?? key;
+    return map[key] ?? key.toUpperCase();
   }
 
   save() {
-    if (!this.newName || !this.newKeyCombo) return;
-    const keybind = { name: this.newName, keyCombo: this.newKeyCombo };
+    if (!this.newName || !this.newKeyCombo || !this.newAction) return;
+    const keybind: Keybind = { name: this.newName, keyCombo: this.newKeyCombo, action: this.newAction };
     if (this.keybindToEdit) {
       this.keybindEdited.emit(keybind);
-  } else {
+    } else {
       this.keybindAdded.emit(keybind);
-  }
-  this.reset();
+    }
+    this.reset();
   }
 
   close() {
@@ -73,9 +99,11 @@ export class AddKeybindModal {
   }
 
   reset() {
-      this.newName = '';
-      this.newKeyCombo = '';
-      this.pressedKeys.clear();
-      this.recording = false;
+    this.newName = '';
+    this.newKeyCombo = '';
+    this.newAction = '';
+    this.selectedPreset = '';
+    this.pressedKeys.clear();
+    this.recording = false;
   }
 }

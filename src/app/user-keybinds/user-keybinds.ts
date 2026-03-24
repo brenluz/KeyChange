@@ -20,6 +20,7 @@ export class UserKeybinds implements OnInit{
   async ngOnInit() {
     this.keybinds = await this.keybindService.load()
     this.filteredKeybinds = [... this.keybinds]
+    await this.keybindService.registerAll(this.keybinds);
   }
 
   onSearch(event: Event){
@@ -40,6 +41,7 @@ export class UserKeybinds implements OnInit{
     this.modalOpen = false;
 
     await this.keybindService.save(this.keybinds)
+    await this.keybindService.registerAll(this.keybinds)
   } 
 
   async deleteKeybind(keybind: Keybind){

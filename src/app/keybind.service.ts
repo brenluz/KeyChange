@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BaseDirectory, readTextFile, writeTextFile, exists, mkdir} from '@tauri-apps/plugin-fs'
+import { register, unregisterAll} from '@tauri-apps/plugin-global-shortcut'
 import {Keybind} from "./add-keybind-modal/add-keybind-modal"
+import { invoke } from '@tauri-apps/api/core';
 
 const FILE_PATH = "keybinds.json";
 
@@ -28,4 +30,20 @@ export class KeybindService {
 	await writeTextFile(FILE_PATH, JSON.stringify(keybinds, null , 2), {baseDir: BaseDirectory.AppData})
   }
 
+
+  async registerAll(keybinds: Keybind[]): Promise<void> {
+	console.log("register all called")
+	await unregisterAll();
+	for (const keybind of keybinds) {
+		try{
+			console.log('Registering:', keybind.keyCombo);
+			await register(keybind.keyCombo, () => {
+				console.log('Shortcut fired:', keybind.keyCombo);
+				invoke('open_action', { action: keybind.action })
+			});
+		} catch (e){
+			console.error('Failed to register ${keybind.keyCombo}')
+		}
+	} 
+  }
 }

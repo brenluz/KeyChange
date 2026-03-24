@@ -30,6 +30,27 @@
                 </div>
             </div>
 
+            <div class="flex flex-col gap-1">
+                <label class="text-sm text-zinc-400">Action</label>
+                <select
+                    [(ngModel)]="selectedPreset"
+                    (ngModelChange)="onPresetChange($event)"
+                    class="bg-zinc-700 text-sm px-3 py-2 rounded outline-none focus:ring-1 focus:ring-zinc-500 text-primary">
+                    <option value="">Custom path...</option>
+                    @for (preset of presets; track preset.label) {
+                        <option [value]="preset.path">{{ preset.label }}</option>
+                    }
+                </select>
+                @if (!selectedPreset) {
+                    <input
+                        type="text"
+                        [(ngModel)]="newAction"
+                        placeholder="e.g. C:\Program Files\MyApp\app.exe"
+                        class="bg-zinc-700 text-sm px-3 py-2 rounded outline-none focus:ring-1 focus:ring-zinc-500 text-primary mt-1"
+                    />
+                }
+            </div>
+
             <div class="flex justify-end gap-2 pt-2">
                 <button (click)="close()"
                     class="text-sm px-4 py-2 rounded bg-zinc-700 hover:bg-zinc-600 transition-colors text-primary">
