@@ -62,6 +62,7 @@ export class UserKeybinds implements OnInit{
     this.keybindToEdit = null;
     this.modalOpen = false;
     await this.keybindService.save(this.keybinds);
+    await this.keybindService.registerAll(this.keybinds);
   }
 
 }

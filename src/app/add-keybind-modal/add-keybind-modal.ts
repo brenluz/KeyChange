@@ -47,18 +47,30 @@ export class AddKeybindModal implements OnChanges {
       this.newName = this.keybindToEdit.name;
       this.newKeyCombo = this.keybindToEdit.keyCombo;
       this.newAction = this.keybindToEdit.action;
-      this.selectedPreset = this.presets.find(p => p.path === this.keybindToEdit!.action)?.path ?? '';
     }
   }
 
-  onPresetChange(value: string) {
-    this.newAction = value;
+  get isCustomAction(): boolean {
+    return !!this.newAction && !this.presets.find(p => p.path === this.newAction);
   }
 
   recordKey(event: KeyboardEvent) {
     event.preventDefault();
-    this.pressedKeys.add(this.formatKey(event.key));
+
+    const modifiers = ['CTRL', 'ALT', 'SHIFT', 'SUPER']
+    const formatted = this.formatKey(event.key)
+
+    if (modifiers.includes(formatted)){
+      this.pressedKeys.add(formatted);
+    }
+    else {
+      const existing = Array.from(this.pressedKeys).filter(k => !modifiers.includes(k));
+      existing.forEach(k => this.pressedKeys.delete(k));
+      this.pressedKeys.add(formatted);
+    }
+
     this.newKeyCombo = Array.from(this.pressedKeys).join('+');
+
   }
 
   stopRecording(event: KeyboardEvent) {

@@ -5,6 +5,7 @@ import {Keybind} from "./add-keybind-modal/add-keybind-modal"
 import { invoke } from '@tauri-apps/api/core';
 
 const FILE_PATH = "keybinds.json";
+let pendingAction: ReturnType<typeof setTimeout> | null = null;
 
 @Injectable({
 	providedIn: 'root',
@@ -37,9 +38,14 @@ export class KeybindService {
 	for (const keybind of keybinds) {
 		try{
 			console.log('Registering:', keybind.keyCombo);
-			await register(keybind.keyCombo, () => {
-				console.log('Shortcut fired:', keybind.keyCombo);
-				invoke('open_action', { action: keybind.action })
+			await register(keybind.keyCombo, (event) => {
+				if (event.state == 'Pressed'){
+					if (pendingAction) clearTimeout(pendingAction);
+                    pendingAction = setTimeout(() => {
+                        invoke('open_action', { action: keybind.action });
+                        pendingAction = null;
+                    }, 200);
+				}
 			});
 		} catch (e){
 			console.error('Failed to register ${keybind.keyCombo}')
