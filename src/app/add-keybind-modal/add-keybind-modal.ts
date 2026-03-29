@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AppPickerModal, AppEntry } from "../app-picker-modal/app-picker-modal";
 
 export interface Keybind {
   name: string;
@@ -14,7 +15,7 @@ interface Preset {
 
 @Component({
   selector: 'app-add-keybind-modal',
-  imports: [FormsModule],
+  imports: [FormsModule, AppPickerModal],
   templateUrl: './add-keybind-modal.html',
 })
 export class AddKeybindModal implements OnChanges {
@@ -30,6 +31,8 @@ export class AddKeybindModal implements OnChanges {
   selectedPreset = '';
   recording = false;
   pressedKeys = new Set<string>();
+
+  pickerOpen = false;
 
   presets: Preset[] = [
     { label: 'Spotify', path: 'spotify' },
@@ -118,4 +121,11 @@ export class AddKeybindModal implements OnChanges {
     this.pressedKeys.clear();
     this.recording = false;
   }
+
+  onAppSelected(app: AppEntry){
+    this.newAction = app.path;
+    if (!this.newName) this.newName = app.name;
+    this.pickerOpen = false;
+  }
+
 }

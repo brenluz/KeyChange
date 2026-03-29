@@ -1,0 +1,54 @@
+@if (isOpen){
+    <div class="fixed inset-0 bg-black/70 flex items-center justify-center z-60" (click)="close()">
+       <div class="bg-zinc-800 rounded w-96 flex flex-col overflow-hidden" (click)="$event.stopPropagation()">
+            <div class="flex items-center justify-between px-4 pt-4 pb-2">
+                <h3 class="text-lg font-medium text-primary">Choose App</h3>
+                <button (click)="close()" class="text-zinc-400 hover:text-white transition-colors">
+                    <mat-icon style="font-size: 18px; width: 18px; height: 18px;">close</mat-icon>
+                </button>
+            </div>
+
+            <div class="flex border-b border-zinc-700 px-4">
+                <button
+                    (click)="activeTab = 'presets'"
+                    [class.border-b-2]="activeTab === 'presets'"
+                    [class.border-blue-500]="activeTab === 'presets'"
+                    [class.text-primary]="activeTab === 'presets'"
+                    class="text-sm px-3 py-2 text-zinc-400 transition-colors">
+                    Presets
+                </button>
+                <button
+                    (click)="activeTab = 'recent'"
+                    [class.border-b-2]="activeTab === 'recent'"
+                    [class.border-blue-500]="activeTab === 'recent'"
+                    [class.text-primary]="activeTab === 'recent'"
+                    class="text-sm px-3 py-2 text-zinc-400 transition-colors">
+                    Recent
+                </button>
+                <button
+                    (click)="activeTab = 'browse'"
+                    [class.border-b-2]="activeTab === 'browse'"
+                    [class.border-blue-500]="activeTab === 'browse'"
+                    [class.text-primary]="activeTab === 'browse'"
+                    class="text-sm px-3 py-2 text-zinc-400 transition-colors">
+                    Browse
+                </button>
+            </div>
+
+            <div class="overflow-y-auto max-h-72 p-2">
+                @if (activeTab === 'presets') {
+                    <div class="grid grid-cols-2 gap-2">
+                        @for (app of presets; track app.name) {
+                            <button (click)="select(app)"
+                                class="flex items-center gap-3 px-3 py-2 rounded bg-zinc-700 hover:bg-zinc-600 transition-colors text-left">
+                                <mat-icon class="text-zinc-400" style="font-size: 18px; width: 18px; height: 18px;">apps</mat-icon>
+                                <span class="text-sm text-primary truncate">{{ app.name }}</span>
+                            </button>
+                        }
+                    </div>
+                }
+            </div>
+       </div>
+    </div>
+    
+}

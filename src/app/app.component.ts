@@ -5,7 +5,7 @@ import { UserKeybinds } from "./user-keybinds/user-keybinds";
 import { TitleBar } from "./title-bar/title-bar";
 @Component({
   selector: "app-root",
-  imports: [RouterOutlet, UserKeybinds, TitleBar],
+  imports: [RouterOutlet, TitleBar],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",
 })
