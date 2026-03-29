@@ -8,11 +8,6 @@ export interface Keybind {
   action: string;
 }
 
-interface Preset {
-  label: string;
-  path: string;
-}
-
 @Component({
   selector: 'app-add-keybind-modal',
   imports: [FormsModule, AppPickerModal],
@@ -34,16 +29,6 @@ export class AddKeybindModal implements OnChanges {
 
   pickerOpen = false;
 
-  presets: Preset[] = [
-    { label: 'Spotify', path: 'spotify' },
-    { label: 'YouTube', path: 'https://youtube.com' },
-    { label: 'Windows Settings', path: 'ms-settings:' },
-    { label: 'File Explorer', path: 'explorer' },
-    { label: 'Task Manager', path: 'taskmgr' },
-    { label: 'Calculator', path: 'calc' },
-    { label: 'Notepad', path: 'notepad' },
-    { label: 'VS Code', path: 'code' },
-  ];
 
   ngOnChanges() {
     if (this.keybindToEdit) {
@@ -51,10 +36,6 @@ export class AddKeybindModal implements OnChanges {
       this.newKeyCombo = this.keybindToEdit.keyCombo;
       this.newAction = this.keybindToEdit.action;
     }
-  }
-
-  get isCustomAction(): boolean {
-    return !!this.newAction && !this.presets.find(p => p.path === this.newAction);
   }
 
   recordKey(event: KeyboardEvent) {

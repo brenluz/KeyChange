@@ -17,14 +17,7 @@
                     class="text-sm px-3 py-2 text-zinc-400 transition-colors">
                     Presets
                 </button>
-                <button
-                    (click)="activeTab = 'recent'"
-                    [class.border-b-2]="activeTab === 'recent'"
-                    [class.border-blue-500]="activeTab === 'recent'"
-                    [class.text-primary]="activeTab === 'recent'"
-                    class="text-sm px-3 py-2 text-zinc-400 transition-colors">
-                    Recent
-                </button>
+
                 <button
                     (click)="activeTab = 'browse'"
                     [class.border-b-2]="activeTab === 'browse'"
@@ -45,6 +38,36 @@
                                 <span class="text-sm text-primary truncate">{{ app.name }}</span>
                             </button>
                         }
+                    </div>
+                }
+
+                @if (activeTab === 'browse') {
+                    <div class="flex flex-col gap-4 p-2">
+                        <div class="flex flex-col gap-2">
+                            <p class="text-xs text-zinc-400">Open an executable</p>
+                            <button (click)="browseFile()"
+                                class="flex items-center gap-2 bg-zinc-700 hover:bg-zinc-600 text-sm px-4 py-2 rounded transition-colors text-primary">
+                                <mat-icon style="font-size: 18px; width: 18px; height: 18px;">folder_open</mat-icon>
+                                Browse Files
+                            </button>
+                        </div>
+
+                        <div class="border-t border-zinc-700 pt-4 flex flex-col gap-2">
+                            <p class="text-xs text-zinc-400">Or enter a URL</p>
+                            <div class="flex gap-2">
+                                <input
+                                    type="text"
+                                    [(ngModel)]="customUrl"
+                                    placeholder="https://..."
+                                    class="flex-1 bg-zinc-700 text-sm px-3 py-2 rounded outline-none focus:ring-1 focus:ring-zinc-500 text-primary"
+                                />
+                                <button (click)="selectUrl()"
+                                    [disabled]="!customUrl"
+                                    class="bg-blue-700 hover:bg-blue-600 disabled:opacity-40 text-sm px-3 py-2 rounded transition-colors">
+                                    Add
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 }
             </div>
