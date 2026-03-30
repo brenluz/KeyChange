@@ -13,32 +13,37 @@ pub struct AppEntry {
 }
 
 #[tauri::command]
-fn get_recent_apps() -> Vec<AppEntry> {
-    let mut apps = Vec::new();
+fn get_exe_icon(path: &str) -> Option<String> {
     #[cfg(target_os = "windows")]
     {
-        let recent_path = format!("{}\\Microsoft\\Windows\\Recent",
-            std::env::var("APPDATA").unwrap_or_default()
+        let script = format!(
+            r#"
+            Add-Type -AssemblyName System.Drawing
+            $icon = [System.Drawing.Icon]::ExtractAssociatedIcon('{path}')
+            $bitmap = $icon.ToBitmap()
+            $ms = New-Object System.IO.MemoryStream
+            $bitmap.Save($ms, [System.Drawing.Imaging.ImageFormat]::Png)
+            $bytes = $ms.ToArray()
+            [Convert]::ToBase64String($bytes)
+            "#,
+            path = path.replace("'", "''")
         );
 
-        if let Ok(entries) = std::fs::read_dir(&recent_path) {
-            for entry in entries.flatten() {
-                let path = entry.path();
-                if path.extension().and_then(|e| e.to_str()) == Some("lnk"){
-                    let name = path.file_stem()
-                    .and_then(|n| n.to_str())
-                    .unwrap_or_default()
-                    .to_string();
-                    apps.push(AppEntry {
-                        name,
-                        path: path.to_string_lossy().to_string(),
-                    })
-                }
-            }
+        let output = std::process::Command::new("powershell")
+            .args(["-NoProfile", "-Command", &script])
+            .output()
+            .ok()?;
+
+        if output.status.success() {
+            let base64 = String::from_utf8(output.stdout).ok()?.trim().to_string();
+            Some(format!("data:image/png;base64,{}", base64))
+        } else {
+            None
         }
     }
-    apps.truncate(10);
-    apps
+
+    #[cfg(not(target_os = "windows"))]
+    None
 }
 
 #[tauri::command]
@@ -57,7 +62,7 @@ fn open_action(action: String) {
 
 pub fn run() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![set_theme, open_action, get_recent_apps])
+        .invoke_handler(tauri::generate_handler![set_theme, open_action, get_exe_icon])
         .setup(|app| {
             TrayIconBuilder::new()
             .icon(app.default_window_icon().unwrap().clone())

@@ -7,13 +7,14 @@ import { open as openDialog } from '@tauri-apps/plugin-dialog';
 export interface AppEntry {
   name: string;
   path: string;
+  logo?: string;
+  exePath?: string;
 }
 
 @Component({
   selector: 'app-app-picker-modal',
   imports: [MatIcon, FormsModule],
   templateUrl: './app-picker-modal.html',
-  styleUrl: './app-picker-modal.css',
 })
 
 export class AppPickerModal {
@@ -27,20 +28,27 @@ export class AppPickerModal {
   customUrl = ''
 
   presets: AppEntry[] = [
-    { name: 'Spotify', path: 'spotify' },
-    { name: 'YouTube', path: 'https://youtube.com' },
-    { name: 'Windows Settings', path: 'ms-settings:' },
-    { name: 'File Explorer', path: 'explorer' },
-    { name: 'Task Manager', path: 'taskmgr' },
-    { name: 'Calculator', path: 'calc' },
-    { name: 'Notepad', path: 'notepad' },
-    { name: 'VS Code', path: 'code' },
-    { name: 'Chrome', path: 'chrome' },
-    { name: 'Discord', path: 'discord' },
+    { name: 'Spotify', path: 'spotify', logo: 'https://www.google.com/s2/favicons?domain=spotify.com&sz=32' },
+    { name: 'YouTube', path: 'https://youtube.com', logo: 'https://www.google.com/s2/favicons?domain=youtube.com&sz=32' },
+    { name: 'Windows Settings', path: 'ms-settings:', exePath: 'C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe' },
+    { name: 'File Explorer', path: 'explorer', exePath: 'C:\\Windows\\explorer.exe' },
+    { name: 'Task Manager', path: 'taskmgr', exePath: 'C:\\Windows\\System32\\Taskmgr.exe' },
+    { name: 'Calculator', path: 'calc', exePath: 'C:\\Windows\\System32\\calc.exe' },
+    { name: 'Notepad', path: 'notepad', exePath: 'C:\\Windows\\System32\\notepad.exe' },
+    { name: 'VS Code', path: 'code', logo: 'https://www.google.com/s2/favicons?domain=code.visualstudio.com&sz=32' },
+    { name: 'Chrome', path: 'chrome', logo: 'https://www.google.com/s2/favicons?domain=google.com&sz=32' },
+    { name: 'Discord', path: 'discord', logo: 'https://www.google.com/s2/favicons?domain=discord.com&sz=32' },
   ];
-
+  
   async ngOnInit() {
-    this.recentApps = await invoke<AppEntry[]>('get_recent_apps');
+    for (const preset of this.presets) {
+      if (preset.exePath && !preset.logo) {
+          try {
+              const icon = await invoke<string>('get_exe_icon', { path: preset.exePath });
+              if (icon) preset.logo = icon;
+          } catch {}
+      }
+  }
   }
 
   select(app: AppEntry) {

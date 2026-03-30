@@ -34,7 +34,12 @@
                         @for (app of presets; track app.name) {
                             <button (click)="select(app)"
                                 class="flex items-center gap-3 px-3 py-2 rounded bg-zinc-700 hover:bg-zinc-600 transition-colors text-left">
-                                <mat-icon class="text-zinc-400" style="font-size: 18px; width: 18px; height: 18px;">apps</mat-icon>
+                                @if (app.logo) {
+                                    <img [src]="app.logo" class="w-5 h-5 rounded-sm"/>
+                                }
+                                @else {
+                                    <mat-icon class="text-zinc-400" style="font-size: 18px; width: 18px; height: 18px;">apps</mat-icon>
+                                }
                                 <span class="text-sm text-primary truncate">{{ app.name }}</span>
                             </button>
                         }
