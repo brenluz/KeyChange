@@ -58,6 +58,21 @@ fn open_action(action: String) {
     std::process::Command::new("cmd")
     .args(["/C", "start", "", &action])
     .spawn().ok();
+
+    #[cfg(target_os = "macos")]
+    if action.contains("://") {
+        std::process::Command::new("open")
+        .arg(action)
+        .spawn().ok();
+    } else if action.contains(".app") {
+        std::process::Command::new("open")
+        .args(["-a", &action])
+        .spawn().ok();
+    } else {
+        std::process::Command::new("open")
+        .arg(action)
+        .spawn().ok();
+    }
 }
 
 pub fn run() {
@@ -94,3 +109,4 @@ pub fn run() {
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
+
