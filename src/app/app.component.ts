@@ -11,7 +11,7 @@ import { TitleBar } from "./title-bar/title-bar";
 })
 export class AppComponent {
   ngOnInit() {
-    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    invoke('set_theme', { isDark });
+    // this.iconCacheService.init();
+    
   }
 }

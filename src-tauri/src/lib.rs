@@ -1,8 +1,8 @@
 mod utils;
 
-use tauri::window::{Color};
-use tauri::{tray::TrayIconBuilder};
-use tauri::tray::TrayIconEvent;
+use tauri::window::Color;
+use tauri::{tray::{TrayIconBuilder, TrayIconEvent, MouseButton, MouseButtonState}};
+use tauri::menu::{MenuBuilder, MenuItemBuilder};
 use tauri::Manager;
 use utils::hex_to_color;
 
@@ -13,37 +13,36 @@ pub struct AppEntry {
 }
 
 #[tauri::command]
-fn get_exe_icon(path: &str) -> Option<String> {
+fn cache_exe_icon(exe_path: &str, cache_path: &str) -> bool {
     #[cfg(target_os = "windows")]
     {
+        // create the directory if it doesn't exist
+        if let Some(parent) = std::path::Path::new(cache_path).parent() {
+            if let Err(_) = std::fs::create_dir_all(parent) {
+                return false;
+            }
+        }
+
         let script = format!(
             r#"
             Add-Type -AssemblyName System.Drawing
-            $icon = [System.Drawing.Icon]::ExtractAssociatedIcon('{path}')
+            $icon = [System.Drawing.Icon]::ExtractAssociatedIcon('{exe_path}')
             $bitmap = $icon.ToBitmap()
-            $ms = New-Object System.IO.MemoryStream
-            $bitmap.Save($ms, [System.Drawing.Imaging.ImageFormat]::Png)
-            $bytes = $ms.ToArray()
-            [Convert]::ToBase64String($bytes)
+            $bitmap.Save('{cache_path}', [System.Drawing.Imaging.ImageFormat]::Png)
             "#,
-            path = path.replace("'", "''")
+            exe_path = exe_path.replace("'", "''"),
+            cache_path = cache_path.replace("'", "''")
         );
 
-        let output = std::process::Command::new("powershell")
+        std::process::Command::new("powershell")
             .args(["-NoProfile", "-Command", &script])
             .output()
-            .ok()?;
-
-        if output.status.success() {
-            let base64 = String::from_utf8(output.stdout).ok()?.trim().to_string();
-            Some(format!("data:image/png;base64,{}", base64))
-        } else {
-            None
-        }
+            .map(|o| o.status.success())
+            .unwrap_or(false)
     }
 
     #[cfg(not(target_os = "windows"))]
-    None
+    false
 }
 
 #[tauri::command]
@@ -79,23 +78,29 @@ pub fn run() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![set_theme, open_action, get_exe_icon])
         .setup(|app| {
+            let quit = MenuItemBuilder::with_id("quit", "Quit").build(app)?;
+            let menu = MenuBuilder::new(app).items(&[&quit]).build()?;
             TrayIconBuilder::new()
-            .icon(app.default_window_icon().unwrap().clone())
-            .on_tray_icon_event(|tray, event|{
-                if let TrayIconEvent::Click{ button: tauri::tray::MouseButton::Left, button_state: tauri::tray::MouseButtonState::Up, .. } = event {
-                    let app = tray.app_handle();
-                    if let Some(window) = app.get_webview_window("main"){
-                        if window.is_visible().unwrap_or(false) {
-                            window.hide().ok();
-                        } else {
-                            window.show().ok();
-                            window.set_focus().ok();
+                .icon(app.default_window_icon().unwrap().clone())
+                .menu(&menu)
+                .show_menu_on_left_click(false)
+                .on_tray_icon_event(|tray, event| {
+                    match event {
+                        TrayIconEvent::Click { button: MouseButton::Left, button_state: MouseButtonState::Up, .. } => {
+                            let app = tray.app_handle();
+                            if let Some(window) = app.get_webview_window("main") {
+                                if window.is_visible().unwrap_or(false) {
+                                    window.hide().ok();
+                                } else {
+                                    window.show().ok();
+                                    window.set_focus().ok();
+                                }
+                            }
                         }
+                        _ => {}
                     }
-                    
-                }
-            })
-            .build(app)?;
+                })
+                .build(app)?;
 
             if let Some(window) = app.get_webview_window("main") {
                 window.hide().ok();
