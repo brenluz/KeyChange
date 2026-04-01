@@ -1,6 +1,6 @@
 # KeyChange
 
-Um aplicativo leve para o sistema Windows para gerenciar atalhos de teclado personalizados. O KeyChange fica na bandeja do sistema e oferece acesso rápido às suas configurações de keybinds sem poluir a barra de tarefas.
+Um aplicativo leve para a bandeja do sistema Windows para gerenciar atalhos de teclado personalizados. O KeyChange fica na bandeja do sistema e oferece acesso rápido às suas configurações de keybinds sem poluir a barra de tarefas.
 
 ## Tecnologias
 
@@ -10,11 +10,13 @@ Um aplicativo leve para o sistema Windows para gerenciar atalhos de teclado pers
 
 ## Funcionalidades
 
-- Roda silenciosamente na bandeja do sistema
-- Clique no ícone da bandeja para mostrar/ocultar a janela
-- Visualize e pesquise seus keybinds personalizados
-- Suporte a tema claro/escuro
-- Janela sem borda nativa com controles customizados
+- Roda silenciosamente na bandeja do sistema — sem poluir a barra de tarefas
+- Clique no ícone da bandeja para mostrar/ocultar a janela, clique com o botão direito para sair
+- Crie keybinds personalizados que abrem aplicativos, URLs ou ferramentas do sistema
+- Atalhos globais que funcionam mesmo quando o aplicativo não está em foco
+- Edite e exclua keybinds existentes
+- Seletor de aplicativos com presets, navegador de arquivos e suporte a URLs personalizadas
+- Exportação e importação de keybinds em JSON
 
 ## Pré-requisitos
 
@@ -54,21 +56,26 @@ pnpm tauri build
 
 ```
 KeyChange/
-├── src/                  # Frontend Angular
+├── src/                        # Frontend Angular
 │   └── app/
-│       ├── header/       # Componente de barra de título customizada
-│       └── user-keybinds/
-├── src-tauri/            # Backend Rust
+│       ├── title-bar/          # Barra de título frameless customizada
+│       ├── user-keybinds/      # Página principal de keybinds
+│       ├── add-keybind-modal/  # Modal de adicionar/editar keybind
+│       ├── app-picker-modal/   # Seletor de aplicativos e URLs
+│       ├── settings/           # Página de configurações
+│       └── services/           # Serviços de keybind, configurações e cache de ícones
+├── src-tauri/                  # Backend Rust
 │   ├── src/
-│   │   ├── lib.rs        # Configuração do Tauri, ícone da bandeja, comandos
-│   │   └── utils/        # Funções auxiliares (hex_to_color, etc.)
+│   │   ├── lib.rs              # Configuração do Tauri, ícone da bandeja, comandos
+│   │   └── utils/              # Funções auxiliares
+│   ├── capabilities/           # Permissões do Tauri
 │   └── tauri.conf.json
 └── tailwind.config.js
 ```
 
 ## IDE Recomendada
 
-[VS Code](https://code.visualstudio.com/) com as seguintes extensões:
+[VS Code](https://code.visualstudio.com/) ou [Cursor](https://cursor.sh/) com as seguintes extensões:
 - [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode)
 - [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
 - [Angular Language Service](https://marketplace.visualstudio.com/items?itemName=Angular.ng-template)

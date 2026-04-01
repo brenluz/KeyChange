@@ -1,6 +1,6 @@
 # KeyChange
 
-A lightweight Windows tray application for managing custom keybinds. KeyChange lives in your system tray and gives you quick access to your keybind configuration without cluttering your taskbar.
+A lightweight Windows tray application for managing custom keybinds. KeyChange lives in your system tray and gives you quick access to your keybind configuration.
 
 ## Tech Stack
 
@@ -10,11 +10,20 @@ A lightweight Windows tray application for managing custom keybinds. KeyChange l
 
 ## Features
 
-- Runs silently in the system tray
-- Click the tray icon to show/hide the window
-- View and search your custom keybinds
-- Dark/light theme support
+- Runs Silently in the Tray
+- Click the tray icon to show/hide the window, right-click to quit
+- Create custom keybinds that launch apps, open URLs, or run system tools
+- Global shortcuts that work even when the app is not focused
+- Edit and delete existing keybinds
+- App picker with presets, file browser, and custom URL support
 - Custom frameless window with native-style controls
+
+Coming Soon: 
+- Search through your keybinds instantly
+- Export and import keybinds as JSON
+- Dark/light theme support
+- Start on startup option
+
 
 ## Prerequisites
 
@@ -54,21 +63,26 @@ pnpm tauri build
 
 ```
 KeyChange/
-├── src/                  # Angular frontend
+├── src/                        # Angular frontend
 │   └── app/
-│       ├── header/       # Custom titlebar component
-│       └── user-keybinds/
-├── src-tauri/            # Rust backend
+│       ├── title-bar/          # Custom frameless titlebar
+│       ├── user-keybinds/      # Main keybind list page
+│       ├── add-keybind-modal/  # Add/edit keybind modal
+│       ├── app-picker-modal/   # App and URL picker
+│       ├── settings/           # Settings page (Coming Soon)
+│       └── services/           # Keybind, settings, icon cache services
+├── src-tauri/                  # Rust backend
 │   ├── src/
-│   │   ├── lib.rs        # Tauri setup, tray icon, commands
-│   │   └── utils/        # Helper functions (hex_to_color, etc.)
+│   │   ├── lib.rs              # Tauri setup, tray icon, commands
+│   │   └── utils/              # Helper functions
+│   ├── capabilities/           # Tauri permissions
 │   └── tauri.conf.json
 └── tailwind.config.js
 ```
 
 ## Recommended IDE Setup
 
-[VS Code](https://code.visualstudio.com/) with the following extensions:
+[VS Code](https://code.visualstudio.com/) or [Cursor](https://cursor.sh/) with the following extensions:
 - [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode)
 - [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
 - [Angular Language Service](https://marketplace.visualstudio.com/items?itemName=Angular.ng-template)
