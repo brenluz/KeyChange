@@ -76,7 +76,7 @@ fn open_action(action: String) {
 
 pub fn run() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![set_theme, open_action, get_exe_icon])
+        .invoke_handler(tauri::generate_handler![set_theme, open_action, cache_exe_icon])
         .setup(|app| {
             let quit = MenuItemBuilder::with_id("quit", "Quit").build(app)?;
             let menu = MenuBuilder::new(app).items(&[&quit]).build()?;
