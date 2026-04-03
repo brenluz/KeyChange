@@ -18,7 +18,7 @@
         @else {
             <ul class="font-jetbrainsmono">
                 @for (keybind of keybinds; track keybind.name + keybind.keyCombo; let i = $index) {
-                    <li class="flex items-center gap-4 py-2">
+                    <li class="flex items-center gap-4 py-2 ml-2">
                         <span class="font-jakarta">{{keybind.name}} </span> 
                         —
                         <span class="font-jetbrainsmono"> {{ keybind.keyCombo }}</span>

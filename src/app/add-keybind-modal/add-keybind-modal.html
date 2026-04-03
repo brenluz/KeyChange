@@ -25,9 +25,16 @@
                     (blur)="recording = false; pressedKeys.clear()"
                     class="bg-zinc-700 text-sm px-3 py-2 rounded outline-none focus:ring-1 focus:ring-zinc-500 cursor-pointer font-jetbrainsmono text-primary"
                     [class.ring-1]="recording"
-                    [class.ring-zinc-400]="recording">
+                    [class.ring-zinc-400]="recording"
+                    [class.ring-red-500]="recording && !isValidCombo">
+
                     {{ newKeyCombo || (recording ? 'Press keys...' : 'Click to record') }}
                 </div>
+                @if (recording) {
+                    <p class="text-xs" [class.text-zinc-400]="isValidCombo" [class.text-red-400]="!isValidCombo">
+                        {{ isValidCombo ? '✓ Valid combo' : 'Needs at least one modifier (Ctrl, Alt, Shift) and one key' }}
+                    </p>
+    }
             </div>
 
             <div class="flex flex-col gap-1">
@@ -45,7 +52,7 @@
                     Cancel
                 </button>
                 <button (click)="save()"
-                    [disabled]="!newName || !newKeyCombo"
+                    [disabled]="!newName || !newKeyCombo || !newAction || !isValidCombo"
                     class="text-sm px-4 py-2 rounded bg-blue-700 hover:bg-blue-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors text-primary">
                     Save
                 </button>

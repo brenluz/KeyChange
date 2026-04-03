@@ -26,6 +26,7 @@ export class AddKeybindModal implements OnChanges {
   selectedPreset = '';
   recording = false;
   pressedKeys = new Set<string>();
+  readonly modifiers = ['CTRL', 'ALT', 'SHIFT', 'SUPER']
 
   pickerOpen = false;
 
@@ -41,14 +42,14 @@ export class AddKeybindModal implements OnChanges {
   recordKey(event: KeyboardEvent) {
     event.preventDefault();
 
-    const modifiers = ['CTRL', 'ALT', 'SHIFT', 'SUPER']
+   
     const formatted = this.formatKey(event.key)
 
-    if (modifiers.includes(formatted)){
+    if (this.modifiers.includes(formatted)){
       this.pressedKeys.add(formatted);
     }
     else {
-      const existing = Array.from(this.pressedKeys).filter(k => !modifiers.includes(k));
+      const existing = Array.from(this.pressedKeys).filter(k => !this.modifiers.includes(k));
       existing.forEach(k => this.pressedKeys.delete(k));
       this.pressedKeys.add(formatted);
     }
@@ -76,6 +77,14 @@ export class AddKeybindModal implements OnChanges {
       ArrowRight: 'Right',
     };
     return map[key] ?? key.toUpperCase();
+  }
+
+  get isValidCombo(): boolean {
+    if (!this.newKeyCombo) return false;
+    const keys = this.newKeyCombo.split('+');
+    const hasModifier = keys.some(k => this.modifiers.includes(k));
+    const hasRegularKey = keys.some(k => !this.modifiers.includes(k));
+    return hasModifier && hasRegularKey;
   }
 
   save() {
