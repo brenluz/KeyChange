@@ -14,31 +14,56 @@ pub struct AppEntry {
 
 #[tauri::command]
 fn cache_exe_icon(exe_path: &str, cache_path: &str) -> bool {
+    println!("cache_exe_icon called");
+    println!("exe_path: {}", exe_path);
+    println!("cache_path: {}", cache_path);
+    
     #[cfg(target_os = "windows")]
     {
-        // create the directory if it doesn't exist
         if let Some(parent) = std::path::Path::new(cache_path).parent() {
-            if let Err(_) = std::fs::create_dir_all(parent) {
-                return false;
+            match std::fs::create_dir_all(parent) {
+                Ok(_) => println!("Directory created/exists"),
+                Err(e) => {
+                    println!("Failed to create dir: {}", e);
+                    return false;
+                }
             }
         }
 
+        let cache_path_forward = cache_path.replace("\\", "/");
+        let exe_path_forward = exe_path.replace("\\", "/");
+
         let script = format!(
             r#"
-            Add-Type -AssemblyName System.Drawing
-            $icon = [System.Drawing.Icon]::ExtractAssociatedIcon('{exe_path}')
-            $bitmap = $icon.ToBitmap()
-            $bitmap.Save('{cache_path}', [System.Drawing.Imaging.ImageFormat]::Png)
+            try {{
+                Add-Type -AssemblyName System.Drawing
+                $icon = [System.Drawing.Icon]::ExtractAssociatedIcon('{exe_path}')
+                $bitmap = $icon.ToBitmap()
+                $bitmap.Save('{cache_path}', [System.Drawing.Imaging.ImageFormat]::Png)
+                Write-Output 'Success'
+            }} catch {{
+                Write-Error $_.Exception.Message
+            }}
             "#,
-            exe_path = exe_path.replace("'", "''"),
-            cache_path = cache_path.replace("'", "''")
+            exe_path = exe_path_forward.replace("'", "''"),
+            cache_path = cache_path_forward.replace("'", "''")
         );
 
-        std::process::Command::new("powershell")
+        match std::process::Command::new("powershell")
             .args(["-NoProfile", "-Command", &script])
-            .output()
-            .map(|o| o.status.success())
-            .unwrap_or(false)
+            .output() 
+        {
+            Ok(output) => {
+                println!("PowerShell stdout: {}", String::from_utf8_lossy(&output.stdout));
+                println!("PowerShell stderr: {}", String::from_utf8_lossy(&output.stderr));
+                println!("PowerShell success: {}", output.status.success());
+                output.status.success()
+            }
+            Err(e) => {
+                println!("Failed to run PowerShell: {}", e);
+                false
+            }
+        }
     }
 
     #[cfg(not(target_os = "windows"))]
@@ -98,6 +123,11 @@ pub fn run() {
                             }
                         }
                         _ => {}
+                    }
+                })
+                .on_menu_event(|_, event| {
+                    if event.id() == "quit" {
+                        std::process::exit(0);
                     }
                 })
                 .build(app)?;

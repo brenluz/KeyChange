@@ -1,14 +1,14 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
-import { invoke } from '@tauri-apps/api/core';
 import { open as openDialog } from '@tauri-apps/plugin-dialog';
+import { IconCacheService } from '../icon-cache.service';
 
 export interface AppEntry {
   name: string;
   path: string;
   logo?: string;
-  exePath?: string;
+  cacheFile?: string;
 }
 
 @Component({
@@ -18,6 +18,8 @@ export interface AppEntry {
 })
 
 export class AppPickerModal {
+
+  constructor(private iconCacheService: IconCacheService) {}
 
   @Input() isOpen = false;
   @Output() closed = new EventEmitter<void>();
@@ -30,25 +32,24 @@ export class AppPickerModal {
   presets: AppEntry[] = [
     { name: 'Spotify', path: 'spotify', logo: 'https://www.google.com/s2/favicons?domain=spotify.com&sz=32' },
     { name: 'YouTube', path: 'https://youtube.com', logo: 'https://www.google.com/s2/favicons?domain=youtube.com&sz=32' },
-    { name: 'Windows Settings', path: 'ms-settings:', exePath: 'C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe' },
-    { name: 'File Explorer', path: 'explorer', exePath: 'C:\\Windows\\explorer.exe' },
-    { name: 'Task Manager', path: 'taskmgr', exePath: 'C:\\Windows\\System32\\Taskmgr.exe' },
-    { name: 'Calculator', path: 'calc', exePath: 'C:\\Windows\\System32\\calc.exe' },
-    { name: 'Notepad', path: 'notepad', exePath: 'C:\\Windows\\System32\\notepad.exe' },
+    { name: 'Windows Settings', path: 'ms-settings:', cacheFile: 'settings.png' },
+    { name: 'File Explorer', path: 'explorer', cacheFile: 'explorer.png' },
+    { name: 'Task Manager', path: 'taskmgr', cacheFile: 'taskmgr.png' },
+    { name: 'Calculator', path: 'calc', cacheFile: 'calculator.png' },
+    { name: 'Notepad', path: 'notepad', cacheFile: 'notepad.png' },
     { name: 'VS Code', path: 'code', logo: 'https://www.google.com/s2/favicons?domain=code.visualstudio.com&sz=32' },
     { name: 'Chrome', path: 'chrome', logo: 'https://www.google.com/s2/favicons?domain=google.com&sz=32' },
     { name: 'Discord', path: 'discord', logo: 'https://www.google.com/s2/favicons?domain=discord.com&sz=32' },
   ];
   
   async ngOnInit() {
+    await this.iconCacheService.init();
     for (const preset of this.presets) {
-      if (preset.exePath && !preset.logo) {
-          try {
-              const icon = await invoke<string>('get_exe_icon', { path: preset.exePath });
-              if (icon) preset.logo = icon;
-          } catch {}
-      }
-  }
+            if (preset.cacheFile) {
+                preset.logo = this.iconCacheService.getIconPath(preset.cacheFile);
+                console.log('Loaded icon for', preset.name, 'from', preset.logo);
+            }
+        }
   }
 
   select(app: AppEntry) {

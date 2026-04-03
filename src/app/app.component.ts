@@ -3,6 +3,8 @@ import { RouterOutlet } from "@angular/router";
 import { invoke } from "@tauri-apps/api/core";
 import { UserKeybinds } from "./user-keybinds/user-keybinds";
 import { TitleBar } from "./title-bar/title-bar";
+import { IconCacheService } from "./icon-cache.service";
+
 @Component({
   selector: "app-root",
   imports: [RouterOutlet, TitleBar],
@@ -10,8 +12,11 @@ import { TitleBar } from "./title-bar/title-bar";
   styleUrl: "./app.component.css",
 })
 export class AppComponent {
-  ngOnInit() {
-    // this.iconCacheService.init();
+
+  constructor(private IconCacheService: IconCacheService) {}
+
+  async ngOnInit() {
+    await this.IconCacheService.init();
     
   }
 }

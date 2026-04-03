@@ -15,8 +15,22 @@
     "fs:allow-app-write",
     "fs:allow-app-meta",
     "fs:allow-mkdir",
-    "fs:allow-write-text-file",
-    "fs:allow-read-text-file",
+    {
+       "identifier": "fs:allow-exists",
+       "allow": [{ "path": "$APPDATA/**" }]
+    },
+    {
+      "identifier": "fs:allow-read-file",
+      "allow": [{ "path": "$APPDATA/**" }]
+    },
+    {
+      "identifier": "fs:allow-write-text-file",
+      "allow": [{ "path": "$APPDATA/**" }]
+    },
+    {
+      "identifier": "fs:allow-read-text-file",
+      "allow": [{ "path": "$APPDATA/**" }]
+    },
     "global-shortcut:allow-register",
     "global-shortcut:allow-unregister",
     "global-shortcut:allow-is-registered",
