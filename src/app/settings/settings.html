@@ -1,1 +1,74 @@
-<p>settings works!</p>
+<div class="text-primary flex flex-col h-full pb-4">
+    <div class="flex items-center gap-3 pt-8 px-6 pb-6">
+        <button (click)="goBack()" class="text-zinc-400 hover:text-white transition-colors">
+            <mat-icon style="font-size: 16px; width: 16px; height: 16px; color: grey;">arrow_back</mat-icon>
+        </button>
+        <h2 class="text-xl">Settings</h2>
+    </div>
+
+    <div class="flex flex-col gap-2 px-4 flex-1 overflow-y-auto">
+        <div class="bg-zinc-700 rounded p-4 flex flex-col gap-4">
+            <h3 class="text-sm font-medium text-zinc-400">Appearance</h3>
+            <div class="flex items-center justify-between">
+                <span class="text-sm">Theme</span>
+                <!--Todo: Add function to change theme-->
+                <select class="bg-zinc-600 text-sm px-3 py-1.5 rounded outline-none text-primary">
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                </select>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <span class="text-sm">Language</span>
+                <!--Todo: Add function to change Language -->
+                <select class="bg-zinc-600 text-sm px-3 py-1.5 rounded outline-none text-primary">
+                    <!-- @for (lang of languages; track lang.value) {
+                        <option [value]="lang.value">{{ lang.label }}</option>
+                    } -->
+                </select>
+            </div>
+        </div>
+
+        <div class="bg-zinc-700 rounded p-4 flex flex-col gap-4">
+            <h3 class="text-sm font-medium text-zinc-400">System</h3>
+            <div class="flex items-center justify-between">
+                <span class="text-sm">Start on startup</span>
+                <!-- Todo: Add startup function -->
+                <div 
+                    class="w-10 h-5 rounded-full cursor-pointer transition-colors relative">
+                    <div class="absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="bg-zinc-700 rounded p-4 flex flex-col gap-4">
+            <h3 class="text-sm font-medium text-zinc-400">Data</h3>
+            <div class="flex items-center justify-between">
+                <span class="text-sm">Export keybinds</span>
+                <button (click)="exportKeybinds()"
+                    class="bg-zinc-600 hover:bg-zinc-500 text-sm px-3 py-1.5 rounded transition-colors">
+                    Export
+                </button>
+            </div>
+            <div class="flex items-center justify-between">
+                <span class="text-sm">Import keybinds</span>
+                <button (click)="importKeybinds()"
+                    class="bg-zinc-600 hover:bg-zinc-500 text-sm px-3 py-1.5 rounded transition-colors">
+                    Import
+                </button>
+            </div>
+        </div>
+
+         <div class="bg-zinc-700 rounded p-4 flex flex-col gap-4">
+            <h3 class="text-sm font-medium text-zinc-400">Danger zone</h3>
+            <div class="flex items-center justify-between">
+                <span class="text-sm">Quit application</span>
+                <button (click)="quit()"
+                    class="bg-red-400 hover:bg-red-600 text-sm px-3 py-1.5 rounded transition-colors">
+                    Quit
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

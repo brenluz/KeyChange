@@ -141,6 +141,8 @@ pub fn run() {
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
+        // Aparently MacosLauncher is mandatory even in windows, it just gets ignored if not on MacOS
+        .plugin(tauri_plugin_autostart::init(tauri_plugin_autostart::MacosLauncher::LaunchAgent, Some(vec![])))
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
