@@ -9,7 +9,6 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class Settings implements OnInit {
 
-
   ngOnInit(){
     
   }
