@@ -10,9 +10,9 @@
         <div class="bg-zinc-700 rounded p-4 flex flex-col gap-4">
             <h3 class="text-sm font-medium text-zinc-400">Appearance</h3>
             <div class="flex items-center justify-between">
-                <span class="text-sm">Theme</span>
-                <!--Todo: Add function to change theme-->
-                <select class="bg-zinc-600 text-sm px-3 py-1.5 rounded outline-none text-primary">
+                <span class="text-sm">Theme</span>    
+                <select [(ngModel)]="settings.theme" (ngModelChange)="onThemeChange()"
+                class="bg-zinc-600 text-sm px-3 py-1.5 rounded outline-none text-primary">
                     <option value="dark">Dark</option>
                     <option value="light">Light</option>
                 </select>
@@ -20,11 +20,11 @@
 
             <div class="flex items-center justify-between">
                 <span class="text-sm">Language</span>
-                <!--Todo: Add function to change Language -->
-                <select class="bg-zinc-600 text-sm px-3 py-1.5 rounded outline-none text-primary">
-                    <!-- @for (lang of languages; track lang.value) {
-                        <option [value]="lang.value">{{ lang.label }}</option>
-                    } -->
+                <select [(ngModel)]="settings.language" (ngModelChange)="onLanguageChange()"
+                class="bg-zinc-600 text-sm px-3 py-1.5 rounded outline-none text-primary">
+                    @for (lang of languages; track lang.label) {
+                        <option [value]="lang.label">{{ lang.code }}</option>
+                    }
                 </select>
             </div>
         </div>
@@ -33,16 +33,13 @@
             <h3 class="text-sm font-medium text-zinc-400">System</h3>
             <div class="flex items-center justify-between">
                 <span class="text-sm">Start on startup</span>
-                <!-- Todo: Add startup function -->
-                <div 
-                    class="w-10 h-5 rounded-full cursor-pointer transition-colors relative">
-                    <div class="absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all"></div>
-                </div>
+                <input type="checkbox" [(ngModel)]="settings.startOnStartup" (change)="onStartupChange()"
+                 class="w-4 h-4 accent-blue-500 cursor-pointer">
             </div>
         </div>
 
 
-        <div class="bg-zinc-700 rounded p-4 flex flex-col gap-4">
+         <div class="bg-theme-surface rounded p-4 flex flex-col gap-4">
             <h3 class="text-sm font-medium text-zinc-400">Data</h3>
             <div class="flex items-center justify-between">
                 <span class="text-sm">Export keybinds</span>

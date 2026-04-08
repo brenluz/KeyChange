@@ -36,6 +36,7 @@
     "global-shortcut:allow-is-registered",
     "global-shortcut:allow-unregister-all",
     "dialog:allow-open",
+    "dialog:allow-save",
     "autostart:allow-enable",
     "autostart:allow-disable",
     "autostart:allow-is-enabled"
