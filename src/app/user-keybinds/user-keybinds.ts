@@ -8,6 +8,7 @@ import { MatIconModule} from '@angular/material/icon'
   imports: [AddKeybindModal, MatIconModule],
   templateUrl: './user-keybinds.html',
 })
+
 export class UserKeybinds implements OnInit{
   modalOpen = false;
   searchExpanded = false;

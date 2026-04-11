@@ -43,7 +43,11 @@ export class Settings implements OnInit {
     }
 
   applyTheme(theme: 'dark' | 'light') {
-      document.documentElement.setAttribute('data-theme', theme);
+      if (theme === 'light') {
+        document.documentElement.classList.add('light');
+    } else {
+        document.documentElement.classList.remove('light');
+    }
   }
 
   async onStartupChange() {

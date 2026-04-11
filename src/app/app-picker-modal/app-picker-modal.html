@@ -1,20 +1,20 @@
 @if (isOpen){
-    <div class="fixed inset-0 bg-black/70 flex items-center justify-center z-60" (click)="close()">
-       <div class="bg-zinc-800 rounded w-96 flex flex-col overflow-hidden" (click)="$event.stopPropagation()">
+    <div class="fixed inset-0 bg-surface-2 flex items-center justify-center z-60" >
+       <div class="bg-surface-2 rounded w-96 flex flex-col overflow-hidden" (click)="$event.stopPropagation()">
             <div class="flex items-center justify-between px-4 pt-4 pb-2">
                 <h3 class="text-lg font-medium text-primary">Choose App</h3>
-                <button (click)="close()" class="text-zinc-400 hover:text-white transition-colors">
-                    <mat-icon style="font-size: 18px; width: 18px; height: 18px;">close</mat-icon>
+                <button (click)="close()" class="text-muted hover:text-white transition-colors">
+                    <mat-icon style="font-size: 18px; width: 18px; height: 18px;" (click)="close()">close </mat-icon>
                 </button>
             </div>
 
-            <div class="flex border-b border-zinc-700 px-4">
+            <div class="flex border-b border-border px-4">
                 <button
                     (click)="activeTab = 'presets'"
                     [class.border-b-2]="activeTab === 'presets'"
                     [class.border-blue-500]="activeTab === 'presets'"
                     [class.text-primary]="activeTab === 'presets'"
-                    class="text-sm px-3 py-2 text-zinc-400 transition-colors">
+                    class="text-sm px-3 py-2 text-muted transition-colors">
                     Presets
                 </button>
 
@@ -23,7 +23,7 @@
                     [class.border-b-2]="activeTab === 'browse'"
                     [class.border-blue-500]="activeTab === 'browse'"
                     [class.text-primary]="activeTab === 'browse'"
-                    class="text-sm px-3 py-2 text-zinc-400 transition-colors">
+                    class="text-sm px-3 py-2 text-muted transition-colors">
                     Browse
                 </button>
             </div>
@@ -33,7 +33,7 @@
                     <div class="grid grid-cols-2 gap-2">
                         @for (app of presets; track app.name) {
                             <button (click)="select(app)"
-                                class="flex items-center gap-3 px-3 py-2 rounded bg-zinc-700 hover:bg-zinc-600 transition-colors text-left">
+                                class="flex items-center gap-3 px-3 py-2 rounded bg-surface hover:bg-border transition-colors text-left">
                                 @if (app.logo) {
                                     <img [src]="app.logo" class="w-5 h-5 rounded-sm"/>
                                 }
@@ -51,24 +51,24 @@
                         <div class="flex flex-col gap-2">
                             <p class="text-xs text-zinc-400">Open an executable</p>
                             <button (click)="browseFile()"
-                                class="flex items-center gap-2 bg-zinc-700 hover:bg-zinc-600 text-sm px-4 py-2 rounded transition-colors text-primary">
+                                class="flex items-center gap-2 bg-surface hover:bg-accenthover text-sm px-4 py-2 rounded transition-colors text-primary">
                                 <mat-icon style="font-size: 18px; width: 18px; height: 18px;">folder_open</mat-icon>
                                 Browse Files
                             </button>
                         </div>
 
-                        <div class="border-t border-zinc-700 pt-4 flex flex-col gap-2">
+                        <div class="border-t border-border pt-4 flex flex-col gap-2">
                             <p class="text-xs text-zinc-400">Or enter a URL</p>
                             <div class="flex gap-2">
                                 <input
                                     type="text"
                                     [(ngModel)]="customUrl"
                                     placeholder="https://..."
-                                    class="flex-1 bg-zinc-700 text-sm px-3 py-2 rounded outline-none focus:ring-1 focus:ring-zinc-500 text-primary"
+                                    class="flex-1 bg-surface text-sm px-3 py-2 rounded outline-none focus:ring-1 focus:ring-zinc-500 text-primary"
                                 />
                                 <button (click)="selectUrl()"
                                     [disabled]="!customUrl"
-                                    class="bg-blue-700 hover:bg-blue-600 disabled:opacity-40 text-sm px-3 py-2 rounded transition-colors">
+                                    class="bg-accent hover:bg-accenthover disabled:opacity-40 text-sm px-3 py-2 rounded transition-colors text-primary">
                                     Add
                                 </button>
                             </div>

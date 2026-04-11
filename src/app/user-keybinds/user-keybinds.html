@@ -1,7 +1,7 @@
 <div class="text-primary bg-surface border-background flex flex-col h-full over">
     <div class="flex justify-between items-center pt-8 px-6 pb-0">
         <h2 class="text-xl">My Keybinds</h2>
-        <input
+        <!-- <input
             type="text"
             placeholder="Search"  
             (input)="onSearch($event)"
@@ -9,9 +9,9 @@
             (blur)="searchExpanded = false"
             [class]="searchExpanded ? 'w-48' : 'w-20'"
             class="bg-zinc-700 text-sm text-primary placeholder-zinc-400 rounded px-3 py-1.5 outline-none focus:ring-1 focus:ring-zinc-500 transition-all duration-300"
-            />
+            /> -->
     </div>
-    <div class="p-2 bg-zinc-700 shadow-2xl mx-4 mt-3 rounded-sm flex-1">
+    <div class="p-2 bg-surface-2 shadow-2xl mx-4 mt-3 rounded-sm flex-1">
         @if (keybinds.length === 0){
             <p class="font-jakarta text-muted">You have no custom keybinds yet. Add one below to get started.</p>
         }
@@ -24,7 +24,7 @@
                         <span class="font-jetbrainsmono"> {{ keybind.keyCombo }}</span>
                         <div class="ml-auto flex gap-2">
                             <button (click)="editKeybind(keybind)" 
-                                class="text-zinc-400 hover:text-white transition-colors leading-none">
+                                class="text-muted hover:text-accenthover transition-colors leading-none">
                                 <mat-icon class="font-size: 16px; width: 16px; height: 16px;">edit</mat-icon>
                             </button>
                             <button (click)="deleteKeybind(keybind)" 
@@ -39,7 +39,7 @@
     </div>
 
     <div class="px-4 pt-3 pb-4">
-        <button (click)="openPopup()" class="bg-blue-700 hover:bg-blue-600 text-sm px-3 py-1.5 rounded transition-colors">
+        <button (click)="openPopup()" class="bg-accent hover:bg-accenthover text-sm px-3 py-1.5 rounded transition-colors">
             + Add Keybind
         </button>
     </div>

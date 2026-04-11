@@ -1,6 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'tailwindcss';
+@import 'material-icons/iconfont/material-icons.css';
+
 @source "../src/**/*.{html,ts}";
+
+@custom-variant light (.light &);
 
 /* Tailwind theme */
 @theme {
@@ -10,6 +14,7 @@
 
   --color-background: #0F1419;
   --color-surface: #1a2332;
+   --color-surface-2: #111827;
   --color-primary: #E6EDF3;
   --color-accent: #3B82F6;
   --color-accenthover: #60a5fa;
@@ -17,6 +22,28 @@
   --color-muted: #8b9bb4;
   --color-sucess: #22c55e;
   --color-error: #ef4444;
+
+}
+
+.light {
+--color-background: #cfd8e3;
+--color-surface: #FFFEFE;
+--color-surface-2: #F1F5F9;
+--color-primary: #1a2332;
+--color-accent: #3B82F6;
+--color-accenthover: #2563eb;
+--color-border: #CBD5E1;
+--color-muted: #64748B;
+}
+
+mat-icon {
+    font-size: inherit !important;
+    width: auto !important;
+    height: auto !important;
+    line-height: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 html, body {

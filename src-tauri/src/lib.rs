@@ -76,12 +76,6 @@ fn quit(app: tauri::AppHandle) {
 }
 
 #[tauri::command]
-fn set_theme(window: tauri::WebviewWindow, is_dark: bool){
-    let color = if is_dark { Some(hex_to_color("#FFFFFF")) } else { Some( Color(255, 255, 255, 255)) };
-    window.set_background_color(color).ok();
-}
-
-#[tauri::command]
 fn open_action(action: String) {
     #[cfg(target_os = "windows")]
     std::process::Command::new("cmd")
@@ -106,7 +100,7 @@ fn open_action(action: String) {
 
 pub fn run() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![set_theme, open_action, cache_exe_icon, quit])
+        .invoke_handler(tauri::generate_handler![open_action, cache_exe_icon, quit])
         .setup(|app| {
             let quit = MenuItemBuilder::with_id("quit", "Quit").build(app)?;
             let menu = MenuBuilder::new(app).items(&[&quit]).build()?;
