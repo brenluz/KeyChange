@@ -1,17 +1,47 @@
 {
+    
     "myKeybinds": "Meus Atalhos",
     "nokeybinds": "Você ainda não tem atalhos personalizados. Adicione um abaixo para começar.",
-    "addKeybind": "+ Adicionar Atalho",
+    "addKeybind": "Adicionar Atalho",
+
+    "addKeybindModal": {
+        "nameLabel": "Nome",
+        "keyLabel": "Atalho",
+        "actionLabel": "Ação",
+        "chooseAppPlaceholder": "Escolha um aplicativo...",
+        "pressKeys": "Pressione as teclas...",
+        "clickToRecord": "Clique para gravar",
+        "validCombo": "✓ Combinação válida",
+        "invalidCombo": "Precisa de pelo menos um modificador (Ctrl, Alt, Shift) e uma tecla",
+        "saveButton": "Salvar",
+        "cancelButton": "Cancelar"
+    },
+
+    "appPicker": {
+        "title": "Escolha um aplicativo",
+        "searchPlaceholder": "Pesquisar aplicativos...",
+        "urlPlaceholder": "Ou insira uma URL",
+        "presetsTab": "Apps pré definidos",
+        "browseTab": "Escolher",
+        "browseButton": "Procurar aplicativos",
+        "addButton": "Adicionar"
+    },
+
     "settings": {
         "title": "Configurações",
         "appearance": "Aparência",
-        "theme": "Tema",
+        "theme": "Modo",
         "language": "Idioma",
         "system": "Sistema",
         "startOnStartup": "Iniciar com o Windows",
         "data": "Dados",
         "exportKeybinds": "Exportar atalhos",
+        "exportButton": "Exportar",
         "importKeybinds": "Importar atalhos",
-        "quit": "Fechar aplicativo"
+        "importButton": "Importar",
+        "quit": "Fechar aplicativo",
+        "quitButton": "Fechar",
+        "dark": "Escuro",
+        "light": "Claro"
     }
 }

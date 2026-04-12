@@ -1,7 +1,32 @@
 {
     "myKeybinds": "My Keybinds",
     "nokeybinds": "You have no custom keybinds yet. Add one below to get started.",
-    "addKeybind": "+ Add Keybind",
+    "addKeybind": "Add Keybind",
+
+    "addKeybindModal": {
+        "nameLabel": "Name",
+        "keyLabel": "Key Combo",
+        "actionLabel": "Action",
+        "chooseAppPlaceholder": "Choose an app...",
+        "pressKeys": "Press keys...",
+        "clickToRecord": "Click to record",
+        "validCombo": "✓ Valid combo",
+        "invalidCombo": "Needs at least one modifier (Ctrl, Alt, Shift) and one key",
+        "saveButton": "Save",
+        "cancelButton": "Cancel"
+    }, 
+    
+    "appPicker": {
+        "title": "Choose App",
+        "searchPlaceholder": "Search apps...",
+        "urlPlaceholder": "Or enter a URL",
+        "presetsTab": "Presets",
+        "browseTab": "Browse",
+        "browseButton": "Browse apps",
+        "addButton": "Add"
+    },
+
+
     "settings": {
         "title": "Settings",
         "appearance": "Appearance",
@@ -12,6 +37,9 @@
         "data": "Data",
         "exportKeybinds": "Export keybinds",
         "importKeybinds": "Import keybinds",
-        "quit": "Quit application"
+        "quit": "Quit application",
+        "quitButton": "Quit",
+        "dark": "Dark",
+        "light": "Light"
     }   
 }

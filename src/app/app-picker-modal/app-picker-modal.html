@@ -2,7 +2,7 @@
     <div class="fixed inset-0 bg-surface-2 flex items-center justify-center z-60" >
        <div class="bg-surface-2 rounded w-96 flex flex-col overflow-hidden" (click)="$event.stopPropagation()">
             <div class="flex items-center justify-between px-4 pt-4 pb-2">
-                <h3 class="text-lg font-medium text-primary">Choose App</h3>
+                <h3 class="text-lg font-medium text-primary">{{ 'appPicker.title' | translate }}</h3>
                 <button (click)="close()" class="text-muted hover:text-white transition-colors">
                     <mat-icon style="font-size: 18px; width: 18px; height: 18px;" (click)="close()">close </mat-icon>
                 </button>
@@ -15,7 +15,7 @@
                     [class.border-blue-500]="activeTab === 'presets'"
                     [class.text-primary]="activeTab === 'presets'"
                     class="text-sm px-3 py-2 text-muted transition-colors">
-                    Presets
+                    {{ 'appPicker.presetsTab' | translate }}
                 </button>
 
                 <button
@@ -24,7 +24,7 @@
                     [class.border-blue-500]="activeTab === 'browse'"
                     [class.text-primary]="activeTab === 'browse'"
                     class="text-sm px-3 py-2 text-muted transition-colors">
-                    Browse
+                    {{ 'appPicker.browseTab' | translate }}
                 </button>
             </div>
 
@@ -49,16 +49,16 @@
                 @if (activeTab === 'browse') {
                     <div class="flex flex-col gap-4 p-2">
                         <div class="flex flex-col gap-2">
-                            <p class="text-xs text-zinc-400">Open an executable</p>
+                            <p class="text-xs text-zinc-400">{{ 'appPicker.searchPlaceholder' | translate }}</p>
                             <button (click)="browseFile()"
                                 class="flex items-center gap-2 bg-surface hover:bg-accenthover text-sm px-4 py-2 rounded transition-colors text-primary">
                                 <mat-icon style="font-size: 18px; width: 18px; height: 18px;">folder_open</mat-icon>
-                                Browse Files
+                                {{ 'appPicker.browseButton' | translate }}
                             </button>
                         </div>
 
                         <div class="border-t border-border pt-4 flex flex-col gap-2">
-                            <p class="text-xs text-zinc-400">Or enter a URL</p>
+                            <p class="text-xs text-zinc-400">{{ 'appPicker.urlPlaceholder' | translate }}</p>
                             <div class="flex gap-2">
                                 <input
                                     type="text"
@@ -69,7 +69,7 @@
                                 <button (click)="selectUrl()"
                                     [disabled]="!customUrl"
                                     class="bg-accent hover:bg-accenthover disabled:opacity-40 text-sm px-3 py-2 rounded transition-colors text-primary">
-                                    Add
+                                    {{ 'appPicker.addButton' | translate }}
                                 </button>
                             </div>
                         </div>

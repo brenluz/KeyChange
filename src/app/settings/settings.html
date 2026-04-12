@@ -3,23 +3,23 @@
         <button (click)="goBack()" class=" hover:text-white transition-colors">
             <mat-icon style="font-size: 16px; width: 16px; height: 16px; color: grey;">arrow_back</mat-icon>
         </button>
-        <h2 class="text-xl">Settings</h2>
+        <h2 class="text-xl">{{ 'settings.title' | translate }}</h2>
     </div>
 
     <div class="flex flex-col gap-2 px-4 flex-1 overflow-y-auto">
         <div class="bg-surface rounded p-4 flex flex-col gap-4">
-            <h3 class="text-sm font-medium text-muted">Appearance</h3>
+            <h3 class="text-sm font-medium text-muted">{{ 'settings.appearance' | translate }}</h3>
             <div class="flex items-center justify-between">
-                <span class="text-sm">Theme</span>    
+                <span class="text-sm">{{ 'settings.theme' | translate }}</span>    
                 <select [(ngModel)]="settings.theme" (ngModelChange)="onThemeChange()"
                 class="bg-border text-sm px-3 py-1.5 rounded outline-none text-primary">
-                    <option value="dark">Dark</option>
-                    <option value="light">Light</option>
+                    <option value="dark">{{ 'settings.dark' | translate }}</option>
+                    <option value="light">{{ 'settings.light' | translate }}</option>
                 </select>
             </div>
 
             <div class="flex items-center justify-between">
-                <span class="text-sm">Language</span>
+                <span class="text-sm">{{ 'settings.language' | translate }}</span>
                 <select [(ngModel)]="settings.language" (ngModelChange)="onLanguageChange()"
                 class="bg-border text-sm px-3 py-1.5 rounded outline-none text-primary">
                     @for (lang of languages; track lang.label) {
@@ -30,9 +30,9 @@
         </div>
 
         <div class="bg-surface rounded p-4 flex flex-col gap-4">
-            <h3 class="text-sm font-medium text-muted">System</h3>
+            <h3 class="text-sm font-medium text-muted">{{ 'settings.system' | translate }}</h3>
             <div class="flex items-center justify-between">
-                <span class="text-sm">Start on startup</span>
+                <span class="text-sm">{{ 'settings.startOnStartup' | translate }}</span>
                 <input type="checkbox" [(ngModel)]="settings.startOnStartup" (change)="onStartupChange()"
                  class="w-4 h-4 accent-blue-500 cursor-pointer">
             </div>
@@ -40,30 +40,30 @@
 
 
          <div class="bg-surface rounded p-4 flex flex-col gap-4">
-            <h3 class="text-sm font-medium text-muted">Data</h3>
+            <h3 class="text-sm font-medium text-muted">{{ 'settings.data' | translate }}</h3>
             <div class="flex items-center justify-between">
-                <span class="text-sm">Export keybinds</span>
+                <span class="text-sm">{{ 'settings.exportKeybinds' | translate }}</span>
                 <button (click)="exportKeybinds()"
                     class="bg-border hover:bg-muted text-sm px-3 py-1.5 rounded transition-colors">
-                    Export
+                    {{ 'settings.exportButton' | translate }}
                 </button>
             </div>
             <div class="flex items-center justify-between">
-                <span class="text-sm">Import keybinds</span>
+                <span class="text-sm">{{ 'settings.importKeybinds' | translate }}</span>
                 <button (click)="importKeybinds()"
                     class="bg-border hover:bg-muted text-sm px-3 py-1.5 rounded transition-colors">
-                    Import
+                    {{ 'settings.importButton' | translate }}
                 </button>
             </div>
         </div>
 
          <div class="bg-surface rounded p-4 flex flex-col gap-4">
-            <h3 class="text-sm font-medium text-muted">Danger zone</h3>
+            <h3 class="text-sm font-medium text-muted">{{ 'settings.quit' | translate }}</h3>
             <div class="flex items-center justify-between">
-                <span class="text-sm">Quit application</span>
+                <span class="text-sm">{{ 'settings.quit' | translate }}</span>
                 <button (click)="quit()"
                     class="bg-red-400 hover:bg-red-600 text-sm px-3 py-1.5 rounded transition-colors">
-                    Quit
+                    {{ 'settings.quitButton' | translate }}
                 </button>
             </div>
         </div>

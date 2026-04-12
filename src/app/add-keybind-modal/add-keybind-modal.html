@@ -4,10 +4,10 @@
         <div class="bg-surface rounded p-6 w-80 flex flex-col gap-4"
             (click)="$event.stopPropagation()">
 
-            <h3 class="text-lg font-medium text-primary">Add Keybind</h3>
+            <h3 class="text-lg font-medium text-primary">{{ 'addKeybind' | translate }}</h3>
 
             <div class="flex flex-col gap-1">
-                <label class="text-sm text-muted">Name</label>
+                <label class="text-sm text-muted">{{ 'addKeybindModal.nameLabel' | translate }}</label>
                 <input
                     type="text"
                     [(ngModel)]="newName"
@@ -16,7 +16,7 @@
             </div>
 
             <div class="flex flex-col gap-1">
-                <label class="text-sm text-muted">Key Combo</label>
+                <label class="text-sm text-muted">{{ 'addKeybindModal.keyLabel' | translate }}</label>
                 <div
                     tabindex="0"
                     (keydown)="recordKey($event)"
@@ -25,33 +25,33 @@
                     (blur)="recording = false; pressedKeys.clear()"
                     class="bg-surface-2 text-sm px-3 py-2 rounded outline-none focus:ring-1 focus:ring-accenthover cursor-pointer font-jetbrainsmono text-primary">
 
-                    {{ newKeyCombo || (recording ? 'Press keys...' : 'Click to record') }}
+                    {{ newKeyCombo || (recording ? ('addKeybindModal.pressKeys' | translate) : ('addKeybindModal.clickToRecord' | translate)) }}
                 </div>
                 @if (recording) {
                     <p class="text-xs" [class.text-zinc-400]="isValidCombo" [class.text-red-400]="!isValidCombo">
-                        {{ isValidCombo ? '✓ Valid combo' : 'Needs at least one modifier (Ctrl, Alt, Shift) and one key' }}
+                        {{ isValidCombo ? ('addKeybindModal.validCombo' | translate) : ('addKeybindModal.invalidCombo' | translate) }}
                     </p>
     }
             </div>
 
             <div class="flex flex-col gap-1">
-                <label class="text-sm text-muted">Action</label>
+                <label class="text-sm text-muted">{{ 'addKeybindModal.actionLabel' | translate }}</label>
                 <button (click)="pickerOpen = true" class="bg-surface-2 text-sm px-3 py-2 rounded text-left hover:bg-accent transition-colors"  
                 [class.text-zinc-400]="!newAction"
                 [class.text-primary]="newAction">
-                    {{ newAction || 'Choose an App...'}}
+                    {{ newAction || 'addKeybindModal.chooseAppPlaceholder' | translate }}
                 </button>
             </div>
 
             <div class="flex justify-end gap-2 pt-2">
                 <button (click)="close()"
                     class="text-sm px-4 py-2 rounded bg-surface-2 hover:bg-zinc-600 transition-colors text-primary">
-                    Cancel
+                    {{ 'addKeybindModal.cancelButton' | translate }}
                 </button>
                 <button (click)="save()"
                     [disabled]="!newName || !newKeyCombo || !newAction || !isValidCombo"
                     class="text-sm px-4 py-2 rounded bg-accent hover:bg-accenthover disabled:opacity-40 disabled:cursor-not-allowed transition-colors text-primary">
-                    Save
+                    {{ 'addKeybindModal.saveButton' | translate }}
                 </button>
             </div>
         </div>
