@@ -23,7 +23,7 @@
                 <select [(ngModel)]="settings.language" (ngModelChange)="onLanguageChange()"
                 class="bg-border text-sm px-3 py-1.5 rounded outline-none text-primary">
                     @for (lang of languages; track lang.label) {
-                        <option [value]="lang.label">{{ lang.code }}</option>
+                        <option [value]="lang.code">{{ lang.label }}</option>
                     }
                 </select>
             </div>

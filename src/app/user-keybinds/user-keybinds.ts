@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AddKeybindModal, Keybind } from '../add-keybind-modal/add-keybind-modal';
 import { KeybindService } from '../keybind.service';
-import { MatIconModule} from '@angular/material/icon'
+import { MatIconModule} from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-keybinds',
-  imports: [AddKeybindModal, MatIconModule],
+  imports: [AddKeybindModal, MatIconModule, TranslateModule],
   templateUrl: './user-keybinds.html',
 })
 

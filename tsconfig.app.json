@@ -7,6 +7,9 @@
     "outDir": "./out-tsc/app",
     "types": []
   },
-  "include": ["src/**/*.ts"],
+  "include": [
+    "src/**/*.ts",
+    "src/assets/translations/*.json"
+  ],
   "exclude": ["src/**/*.spec.ts"]
 }

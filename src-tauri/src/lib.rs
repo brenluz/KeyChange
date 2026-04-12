@@ -1,10 +1,6 @@
-mod utils;
-
-use tauri::window::Color;
 use tauri::{tray::{TrayIconBuilder, TrayIconEvent, MouseButton, MouseButtonState}};
 use tauri::menu::{MenuBuilder, MenuItemBuilder};
 use tauri::Manager;
-use utils::hex_to_color;
 
 #[derive(serde::Serialize)]
 pub struct AppEntry {

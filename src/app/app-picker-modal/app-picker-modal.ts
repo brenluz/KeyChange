@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { open as openDialog } from '@tauri-apps/plugin-dialog';
 import { IconCacheService } from '../icon-cache.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 export interface AppEntry {
   name: string;
@@ -13,7 +14,7 @@ export interface AppEntry {
 
 @Component({
   selector: 'app-app-picker-modal',
-  imports: [MatIcon, FormsModule],
+  imports: [MatIcon, FormsModule, TranslateModule],
   templateUrl: './app-picker-modal.html',
 })
 
@@ -47,7 +48,6 @@ export class AppPickerModal {
     for (const preset of this.presets) {
             if (preset.cacheFile) {
                 preset.logo = this.iconCacheService.getIconPath(preset.cacheFile);
-                console.log('Loaded icon for', preset.name, 'from', preset.logo);
             }
         }
   }

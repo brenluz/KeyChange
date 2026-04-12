@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppPickerModal, AppEntry } from "../app-picker-modal/app-picker-modal";
+import { TranslateModule } from '@ngx-translate/core';
 
 export interface Keybind {
   name: string;
@@ -10,7 +11,7 @@ export interface Keybind {
 
 @Component({
   selector: 'app-add-keybind-modal',
-  imports: [FormsModule, AppPickerModal],
+  imports: [FormsModule, AppPickerModal, TranslateModule],
   templateUrl: './add-keybind-modal.html',
 })
 export class AddKeybindModal implements OnChanges {

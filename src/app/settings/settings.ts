@@ -8,10 +8,12 @@ import { invoke } from '@tauri-apps/api/core';
 import { FormsModule } from '@angular/forms';
 import { open as openDialog, save as saveDialog} from '@tauri-apps/plugin-dialog';
 import { readTextFile, writeTextFile } from '@tauri-apps/plugin-fs';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-settings',
-  imports: [MatIconModule, FormsModule],
+  imports: [MatIconModule, FormsModule, TranslateModule],
   templateUrl: './settings.html',
   styleUrl: './settings.css'  
 })
@@ -28,7 +30,7 @@ export class Settings implements OnInit {
     { code: 'pt', label: 'Portuguese' },
   ];
 
-  constructor(private settingsService: SettingsService, private keybindService: KeybindService) { }
+  constructor(private settingsService: SettingsService, private keybindService: KeybindService, private translateService: TranslateService) { }
 
   async ngOnInit(){
     this.settings = await this.settingsService.load();
@@ -61,6 +63,7 @@ export class Settings implements OnInit {
 
   async onLanguageChange() {
     await this.settingsService.save(this.settings);
+    this.translateService.use(this.settings.language);
   } 
 
   goBack(){

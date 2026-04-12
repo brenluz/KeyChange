@@ -1,0 +1,17 @@
+{
+    "myKeybinds": "Meus Atalhos",
+    "nokeybinds": "Você ainda não tem atalhos personalizados. Adicione um abaixo para começar.",
+    "addKeybind": "+ Adicionar Atalho",
+    "settings": {
+        "title": "Configurações",
+        "appearance": "Aparência",
+        "theme": "Tema",
+        "language": "Idioma",
+        "system": "Sistema",
+        "startOnStartup": "Iniciar com o Windows",
+        "data": "Dados",
+        "exportKeybinds": "Exportar atalhos",
+        "importKeybinds": "Importar atalhos",
+        "quit": "Fechar aplicativo"
+    }
+}

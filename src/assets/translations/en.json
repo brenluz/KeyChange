@@ -1,0 +1,17 @@
+{
+    "myKeybinds": "My Keybinds",
+    "nokeybinds": "You have no custom keybinds yet. Add one below to get started.",
+    "addKeybind": "+ Add Keybind",
+    "settings": {
+        "title": "Settings",
+        "appearance": "Appearance",
+        "theme": "Theme",
+        "language": "Language",
+        "system": "System",
+        "startOnStartup": "Start on startup",
+        "data": "Data",
+        "exportKeybinds": "Export keybinds",
+        "importKeybinds": "Import keybinds",
+        "quit": "Quit application"
+    }   
+}
