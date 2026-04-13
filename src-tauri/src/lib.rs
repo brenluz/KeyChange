@@ -136,6 +136,17 @@ pub fn run() {
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
+        .plugin(tauri_plugin_single_instance::init(|app, argv, cwd| {
+            println!("Another instance attempted to start with args: {:?} and cwd: {:?}", argv, cwd);
+            if let Some(window) = app.get_webview_window("main") {
+                if window.is_visible().unwrap_or(false) {
+                    window.hide().ok();
+                } else {
+                    window.show().ok();
+                    window.set_focus().ok();
+                }
+            }
+        }))
         // Aparently MacosLauncher is mandatory even in windows, it just gets ignored if not on MacOS
         .plugin(tauri_plugin_autostart::init(tauri_plugin_autostart::MacosLauncher::LaunchAgent, Some(vec![])))
         .run(tauri::generate_context!())
